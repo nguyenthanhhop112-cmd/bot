@@ -29,9 +29,9 @@ def keep_alive():
     
 
 
-TOKEN = "8537896639:AAFJsUf6stfyT21Je2w1kH8OBFwK2xoT8OA"
+TOKEN = "8548769965:AAGiFT1QufOG4IBLgo0RjnRAMa0uM5ugCh8"
 bot = telebot.TeleBot(TOKEN)
-admins = [7816353760]  # Danh sách ID admin
+admins = [6302038392]  # Danh sách ID admin
 
 
 # Hàm thêm người mời vào invited.json
