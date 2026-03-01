@@ -6,7 +6,27 @@ from telebot.types import ChatMemberAdministrator
 from filelock import FileLock
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import threading
+import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
+class DummyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(b"Bot dang hoat dong tot tren Render!")
+        
+    def log_message(self, format, *args):
+        # Tắt log hiển thị để console đỡ bị rác
+        pass
+
+def keep_alive():
+    port = int(os.environ.get('PORT', 8080))
+    server = HTTPServer(('0.0.0.0', port), DummyHandler)
+    print(f"Da mo cong Web gia tren port {port} de danh lua Render")
+    server.serve_forever()
+    
 
 
 TOKEN = "8537896639:AAFJsUf6stfyT21Je2w1kH8OBFwK2xoT8OA"
@@ -1263,6 +1283,11 @@ def process_announcement(message):
                           f"✅ Thành công: {success}\n"
                           f"❌ Thất bại: {failed}")
 
+# Dán dòng này vào TRƯỚC dòng bot.polling()
+threading.Thread(target=keep_alive, daemon=True).start()
+
+# Chỗ này là code có sẵn của bạn, KHÔNG XÓA NHÉ, ví dụ:
+# bot.infinity_polling(timeout=10, long_polling_timeout=5)
 
 
 bot.infinity_polling(timeout=60, long_polling_timeout=1)
